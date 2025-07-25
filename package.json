@@ -1,6 +1,6 @@
 {
   "name": "bing-queen-ai",
-  "version": "3.9.0",
+  "version": "1.0.0",
   "description": "冰冰AI聊天系统",
   "author": "bing.queen",
   "license": "MIT",
@@ -59,6 +59,7 @@
     "sass-loader": "10.1.1",
     "script-ext-html-webpack-plugin": "2.1.5",
     "svg-sprite-loader": "5.1.1",
+    "uuid": "^11.1.0",
     "vue-template-compiler": "2.6.12"
   },
   "engines": {

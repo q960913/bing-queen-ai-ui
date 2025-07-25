@@ -7,6 +7,7 @@
 <script>
 export default {
   name: 'BingQueenAiDoc',
+  url: 'https://github.com/q960913/bing-queen-ai-proxy',
   data() {
     return {
     }

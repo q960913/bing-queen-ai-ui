@@ -74,6 +74,24 @@ export const constantRoutes = [
       }
     ]
   },
+  // src/router/index.js
+  {
+    path: '/chat',
+    component: Layout,
+    redirect: '/chat/session', // 重定向到一个默认或欢迎页面
+    name: 'ChatContainer', // 给父路由一个名字
+    meta: { title: 'AI 对话', icon: 'message' },
+    children: [
+      {
+        path: 'session/:sessionId?', // [核心] sessionId 是可选参数
+        component: () => import('@/views/chat/index'),
+        name: 'Chat',
+        // 隐藏这个子路由，因为我们只想在父菜单上显示“AI 对话”
+        hidden: true,
+        meta: { title: '聊天窗口', activeMenu: '/chat' }
+      }
+    ]
+  },
   {
     path: '/user',
     component: Layout,

@@ -10,11 +10,11 @@
         <search id="header-search" class="right-menu-item" />
 
         <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git id="bing-queen-ai-git" class="right-menu-item hover-effect" />
+          <bing-queen-ai-git id="bing-queen-ai-git" class="right-menu-item hover-effect" />
         </el-tooltip>
 
         <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc id="bing-queen-ai-doc" class="right-menu-item hover-effect" />
+          <bing-queen-ai-doc id="bing-queen-ai-doc" class="right-menu-item hover-effect" />
         </el-tooltip>
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
