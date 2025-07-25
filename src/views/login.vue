@@ -73,9 +73,9 @@ export default {
       title: process.env.VUE_APP_TITLE,
       codeUrl: "",
       loginForm: {
-        username: "admin",
-        password: "admin123",
-        rememberMe: false,
+        username: "",
+        password: "",
+        rememberMe: true,
         code: "",
         uuid: ""
       },
