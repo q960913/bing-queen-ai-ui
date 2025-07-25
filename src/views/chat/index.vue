@@ -1,6 +1,6 @@
 <template>
   <!-- 1. 根容器，我们将用 flexbox 来布局它 -->
-  <div class="chat-page-container">
+  <div class="chat-page-container" :class="theme">
     <el-drawer
       title="历史会话"
       :visible.sync="drawerVisible"
@@ -10,13 +10,19 @@
     <!-- 2. 左侧会话面板 -->
     <div class="session-panel">
       <div class="session-header">
-        <h3>历史会话</h3>
         <el-button
           type="primary"
           icon="el-icon-plus"
           circle
           size="mini"
           @click="createNewSession"
+        ></el-button>
+        <!-- [新增] 主题切换按钮 -->
+        <el-button
+          :icon="theme === 'light' ? 'el-icon-moon' : 'el-icon-sunny'"
+          circle size="mini"
+          @click="toggleTheme"
+          style="margin-left: 10px;"
         ></el-button>
       </div>
       <el-scrollbar class="session-list-scrollbar">
@@ -277,6 +283,7 @@ export default {
   name: 'Chat', // 给组件起个名字是个好习惯
   data() {
     return {
+      theme: 'light', // [核心 2] 新增主题状态
       isSelectionMode: false,
       drawerVisible: false, // [新增] 控制抽屉的显示和隐藏
       selectedMessages:[],
@@ -317,6 +324,11 @@ export default {
     };
   },
   methods: {
+    // [核心 3] 新增主题切换方法
+    toggleTheme() {
+      this.theme = this.theme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('chat-theme', this.theme); // 保存用户偏好
+    },
     toggleSelectionMode() {
       this.isSelectionMode = !this.isSelectionMode;
       // 退出选择模式时，清空已选项
@@ -550,7 +562,38 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+/* [核心] 定义颜色变量 */
+.chat-page-container {
+  /* --- 日间模式 (默认) --- */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f7fa;
+  --bg-tertiary: #f0f2f5;
+  --border-color: #e6e6e6;
+  --text-primary: #303133;
+  --text-secondary: #606266;
+  --brand-color: #409EFF;
+  --brand-text-color: #ffffff;
+
+  /* ... 其他布局样式 ... */
+  height: calc(100vh - 84px);
+  display: flex;
+}
+
+/* [核心] 当有 .dark 类时，覆盖上面的变量 */
+.chat-page-container.dark {
+  --bg-primary: #1a1b1e;
+  --bg-secondary: #212529;
+  --bg-tertiary: #343a40;
+  --border-color: #343a40;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --brand-color: #007bff;
+  --brand-text-color: #ffffff;
+}
+
+/* ... 后面的所有 CSS ... */
 /* --- 1. 顶层 Flexbox 布局 --- */
 
 .chat-page-container {
@@ -632,6 +675,7 @@ export default {
   height: 100%;
   display: flex;
   width: 100%;
+  background-color: var(--bg-primary);
 }
 
 /* --- 4. 聊天窗口内部 (绝对定位布局) --- */
@@ -656,6 +700,7 @@ export default {
   display: flex; /* [新增] 启用 Flexbox */
   justify-content: space-between; /* [新增] 两端对齐 */
   align-items: center; /* [新增] 垂直居中 */
+  background-color: var(--bg-primary);
 }
 
 .chat-main-area {
@@ -663,6 +708,7 @@ export default {
   padding: 0;
   /* [关键] 需要让 el-scrollbar 知道该怎么撑开 */
   overflow: hidden;
+  background-color: var(--bg-primary);
 }
 
 
@@ -670,10 +716,10 @@ export default {
   flex-shrink: 0;
   /* height: 60px; (去掉固定高度) */
   padding: 10px 20px;
-  background-color: #fcfcfc;
   border-top: 1px solid #f0f0f0;
   box-sizing: border-box;
   transition: height 0.3s ease; /* 高度变化动画 */
+  background-color: var(--bg-primary);
 }
 /* --- 5. 消息列表和气泡样式 --- */
 /* 这部分也保持不变 */
@@ -852,5 +898,47 @@ export default {
 /* session-item 和 delete-session-btn 的样式保持不变，但可以简化 */
 .delete-session-btn {
   visibility: visible; /* 在抽屉里可以直接显示，不用再悬停了 */
+}
+/* --- 左侧会话面板样式 --- */
+.session-panel {
+  background-color: var(--bg-secondary); /* 原来是 #f5f7fa */
+  border-right: 1px solid var(--border-color); /* 原来是 #e6e6e6 */
+}
+.session-header h3 {
+  color: var(--text-primary);
+}
+/* ... 等等 ... */
+
+
+/* --- 聊天气泡样式 --- */
+.ai-message .message-bubble {
+  background-color: var(--bg-tertiary); /* 原来是 #f0f2f5 */
+  color: var(--text-primary);
+}
+.user-message .message-bubble {
+  background-color: var(--brand-color); /* 原来是 #409EFF */
+  color: var(--brand-text-color);
+}
+
+
+/* --- Element UI 组件覆盖 --- */
+/* 这里我们依然需要 ::v-deep，但只需要写一次，而不是为每个主题都写！ */
+::v-deep .el-input__inner {
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+/* [新增] 覆盖 el-tag 的样式 */
+::v-deep .el-tag {
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+::v-deep .el-tag .el-tag__close {
+  color: var(--text-secondary);
+}
+::v-deep .el-tag .el-tag__close:hover {
+  background-color: var(--brand-color);
+  color: var(--brand-text-color);
 }
 </style>
