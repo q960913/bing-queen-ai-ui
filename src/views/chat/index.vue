@@ -941,4 +941,20 @@ export default {
   background-color: var(--brand-color);
   color: var(--brand-text-color);
 }
+
+/* [核心修复] 为 Header 内的标题和图标在夜间模式下设置颜色 */
+.dark .topic-display {
+  color: var(--text-primary); /* 使用我们定义的主要文字亮色变量 */
+}
+
+/* （可选）如果你想让编辑图标的颜色更柔和一点 */
+.dark .topic-display i {
+  color: var(--text-secondary); /* 使用次要文字颜色 */
+}
+
+/* 确保多选按钮在夜间模式下也清晰可见 */
+.dark .chat-header .el-button {
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-color);}
 </style>
