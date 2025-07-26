@@ -84,7 +84,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'session/:sessionId?', // [核心] sessionId 是可选参数
-        component: () => import('@/views/chat/index'),
+        component: () => import('@/views/chat/chatView'),
         name: 'Chat',
         // 隐藏这个子路由，因为我们只想在父菜单上显示“AI 对话”
         hidden: true,
