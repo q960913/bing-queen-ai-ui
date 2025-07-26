@@ -63,7 +63,7 @@ export default {
 
     // [核心] 组件自己的方法，负责 UI 交互
     handleDelete(session) {
-      this.$confirm(`确定要删除会Git Flow - A successful Git branching model - Vincent Driessen - nvie.com 话 "${session.topic}" 吗？`, '提示', {
+      this.$confirm(`确定要删除会话 "${session.topic}" 吗？`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
