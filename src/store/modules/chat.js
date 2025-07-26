@@ -2,8 +2,6 @@
 
 // 1. 定义需要全局共享的状态 (State - 公告牌)
 const state = {
-  isEditingTopic: false,
-  currentTopicInput:"",
   isSessionPanelCollapsed: false, // [新增]
   isSelectionMode: false,
   selectedMessages: [],
@@ -99,9 +97,15 @@ const mutations = {
   SET_IS_EDITING_TOPIC(state, messages) {
     state.isEditingTopic = messages;
   },
-  TOGGLE_TOPIC(state,sessionId) {
-    state.sessions[sessions.findIndex(activeSession)].topic = state.currentTopicInput;
-    state.isEditingTopic = false
+  // [核心] 这是正确的修改标题的 mutation
+  UPDATE_TOPIC: (state, { sessionId, newTopic }) => {
+    // 1. 找到要修改的那个 session 对象
+    const sessionToUpdate = state.sessions.find(session => session.sessionId === sessionId);
+
+    // 2. 如果找到了，就修改它的 topic
+    if (sessionToUpdate) {
+      sessionToUpdate.topic = newTopic;
+    }
   }
 }
 
@@ -166,12 +170,14 @@ const actions = {
     }, 1000)
   },
 
-  saveTopic({commit, state}) {
-    const sessionId = state.activeSessionId
-    if (!sessionId) return
-    // 找到当前 session 并修改它的 topic
-    commit('TOGGLE_TOPIC',sessionId, state.currentTopicInput)
-  },
+  // [核心] 这是正确的修改标题的 action
+  updateTopic({ commit }, { sessionId, newTopic }) {
+    // (未来这里会是调用后端 API 的地方)
+    // api.updateSession(sessionId, { topic: newTopic }).then(() => { ... })
+
+    // 提交 mutation 来更新前端的状态
+    commit('UPDATE_TOPIC', { sessionId, newTopic });
+  }
 
   // ... 未来对接后端的 Action ...
   // fetchSessions({ commit }) {

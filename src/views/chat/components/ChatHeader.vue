@@ -8,7 +8,7 @@
       style="margin-right: 15px;"
     ></el-button>
     <!-- 显示标题的区域 -->
-    <div v-if="!isEditingTopicProxy" class="topic-display" @click="startEditTopic">
+    <div v-if="!isEditingTopic" class="topic-display" @click="startEditTopic">
       <span>{{ activeSession.topic }}</span>
       <i class="el-icon-edit-outline" style="margin-left: 10px; cursor: pointer;"></i>
     </div>
@@ -16,7 +16,7 @@
     <!-- 编辑标题的输入框 -->
     <el-input
       v-else
-      v-model="currentTopicInputProxy"
+      v-model="currentTopicInput"
       size="mini"
       @blur="saveTopic"
       @keyup.enter.native="saveTopic"
@@ -35,7 +35,10 @@ export default {
   name: 'ChatHeader',
   data() {
     return {
-      drawerVisible: false
+      drawerVisible: false,
+      // [核心] 这两个 UI 状态，保留在组件内部
+      isEditingTopic: false,
+      currentTopicInput: ''
     }
   },
   mounted() {
@@ -46,34 +49,28 @@ export default {
     ...mapState('chat', {
       isCollapsed: state => state.isSessionPanelCollapsed
     },),
-      ...mapState('chat', ['sessions','selectedMessages','isSelectionMode','isEditingTopic','currentTopicInput']),
-    isEditingTopicProxy: {
-      get() {
-        return this.isEditingTopic;
-      },
-      set(value) {
-        this.$store.commit('chat/SET_IS_EDITING_TOPIC', value);
-      }
-    },
-    currentTopicInputProxy: {
-      get() {
-        return this.currentTopicInput;
-      },
-      set(value) {
-        this.$store.commit('chat/SET_CURRENT_TOPIC_INPUT', value);
-      }
-    }
+      ...mapState('chat', ['sessions','selectedMessages','isSelectionMode'])
   },
   methods: {
-    ...mapActions('chat', ['toggleSelectionMode', 'toggleSessionPanel','saveTopic']),
+    ...mapActions('chat', ['toggleSelectionMode', 'toggleSessionPanel','updateTopic']),
    // 开始编辑标题
     startEditTopic() {
-      this.currentTopicInputProxy = this.activeSession.topic;
-      this.isEditingTopicProxy = true;
-      // 让输入框自动聚焦
-      this.$nextTick(() => {
-        this.$refs.topicInput.focus();
-      });
+      this.currentTopicInput = this.activeSession.topic;
+      this.isEditingTopic = true;
+      this.$nextTick(() => this.$refs.topicInput.focus());
+    },
+    // [核心] 这是修改后的 saveTopic 方法
+    saveTopic() {
+      // 检查内容是否有变化，以及是否为空
+      if (this.currentTopicInput && this.currentTopicInput !== this.activeSession.topic) {
+        // 调用 Vuex action，并把 sessionId 和新标题作为 payload 传递过去
+        this.updateTopic({
+          sessionId: this.activeSession.sessionId,
+          newTopic: this.currentTopicInput
+        });
+      }
+      // 无论是否保存，都退出编辑模式
+      this.isEditingTopic = false;
     }
 
   }
