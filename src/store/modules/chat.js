@@ -100,7 +100,7 @@ const mutations = {
     state.isEditingTopic = messages;
   },
   TOGGLE_TOPIC(state,sessionId) {
-    state.activeSession.topic = state.currentTopicInput;
+    state.sessions[sessions.findIndex(activeSession)].topic = state.currentTopicInput;
     state.isEditingTopic = false
   }
 }
