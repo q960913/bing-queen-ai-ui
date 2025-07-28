@@ -31,7 +31,29 @@
 
           <!-- 消息气泡 -->
           <div class="message-bubble">{{ msg.content }}</div>
+          <!-- 在 v-for 循环中，AI 消息的部分 -->
+          <div
+            v-if="msg.totalVersions > 1"
+            class="version-switcher"
+          >
+            <el-button
+              icon="el-icon-arrow-left"
+              size="mini"
+              circle
+              :disabled="msg.activeVersion === 1"
+              @click="fetchVersion(msg, msg.activeVersion - 1)"
+            ></el-button>
 
+            <span>{{ msg.activeVersion }} / {{ msg.totalVersions }}</span>
+
+            <el-button
+              icon="el-icon-arrow-right"
+              size="mini"
+              circle
+              :disabled="msg.activeVersion === msg.totalVersions"
+              @click="fetchVersion(msg, msg.activeVersion + 1)"
+            ></el-button>
+          </div>
           <!-- [新增] 悬浮的操作栏 -->
           <div class="message-actions-bar">
             <el-tooltip content="修改" placement="top">
@@ -42,17 +64,17 @@
                 @click="editMessage(msg)"
               ></el-button>
             </el-tooltip>
-            <el-tooltip content="截图" placement="top">
+            <el-tooltip content="删除" placement="top">
               <el-button
-                icon="el-icon-camera"
+                icon="el-icon-delete"
                 size="mini"
                 circle
                 @click="screenshotMessage(msg)"
               ></el-button>
             </el-tooltip>
-            <el-tooltip content="导出" placement="top">
+            <el-tooltip content="重新生成" placement="top">
               <el-button
-                icon="el-icon-download"
+                icon="el-icon-refresh"
                 size="mini"
                 circle
                 @click="exportMessage(msg)"
@@ -68,7 +90,7 @@
 </template>
 
 <script>
-import {mapGetters, mapState} from 'vuex'
+import {mapGetters, mapState,mapMutations} from 'vuex'
 
 export default {
   name: 'MessageList',
@@ -79,7 +101,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('chat', ['currentMessages']),
+    ...mapGetters('chat', ['currentMessages','activeSession']),
     ...mapState('chat', ['isSelectionMode','selectedMessages']),
     // [核心] 可写的计算属性，作为 v-model 的代理
     selectedMessagesProxy: {
@@ -137,6 +159,45 @@ export default {
     }
     , loadMoreMessages() {
 
+    },
+    // [核心] 映射一个 mutation
+    ...mapMutations('chat', ['UPDATE_MESSAGE_CONTENT']),
+
+    async fetchVersion(originalMessage, targetVersion) {
+      try {
+        // [核心] 显示一个加载状态，比如在气泡上覆盖一个 loading 图标
+        // this.setLoadingState(originalMessage.id, true);
+
+        // 调用我们新设计的后端 API
+        // const response = await axios.get(`/api/chat/turn/${originalMessage.turnId}/version/${targetVersion}`);
+
+        // --- 模拟后端返回 ---
+        const fakeBackendResponse = {
+          data: {
+            id: originalMessage.id, // ID 保持不变
+            content: `这是从后端获取的第 ${targetVersion} 版的新内容。`,
+            activeVersion: targetVersion,
+            // ... 其他可能更新的数据
+          }
+        };
+        // --- 模拟结束 ---
+
+        const newVersionData = fakeBackendResponse.data;
+
+        // [核心] 调用 mutation 来更新 Vuex state 中的这条消息
+        this.UPDATE_MESSAGE_CONTENT({
+          sessionId: this.activeSession.sessionId,
+          messageId: originalMessage.id,
+          newData: newVersionData
+        });
+
+      } catch (error) {
+        console.error("获取历史版本失败:", error);
+        this.$message.error("加载版本失败！");
+      } finally {
+        // 取消加载状态
+        // this.setLoadingState(originalMessage.id, false);
+      }
     }
     // ... computed for currentMessages ...
     // ... methods for copyMessageContent, editMessage, etc. ...

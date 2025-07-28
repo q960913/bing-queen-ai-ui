@@ -13,17 +13,26 @@ const state = {
       id: 1,
       role: 'ai',
       content: '若依部署有什么问题吗？',
-      avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+      avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+      turnId: 'turn-uuid-123', // [新增] 轮次ID
+      activeVersion: 2,         // [新增] 当前版本号
+      totalVersions: 5          // [新增] 总版本数
     }, {
       id: 2,
       role: 'user',
       content: '我想把它部署到 Vercel。',
-      avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+      avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      turnId: 'turn-uuid-123', // [新增] 轮次ID
+      activeVersion: 2,         // [新增] 当前版本号
+      totalVersions: 5          // [新增] 总版本数
     },], '1': [{
       id: 3,
       role: 'ai',
       content: '学习 Swift 最好的方法是用 Playgrounds！',
-      avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+      avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+      turnId: 'turn-uuid-123', // [新增] 轮次ID
+      activeVersion: 2,         // [新增] 当前版本号
+      totalVersions: 5          // [新增] 总版本数
     },], 'session-3': [],
   }, theme: localStorage.getItem('chat-theme') || 'light', // ... 其他需要共享的状态 ...
 }
@@ -106,7 +115,26 @@ const mutations = {
     if (sessionToUpdate) {
       sessionToUpdate.topic = newTopic;
     }
-  }
+  },
+  // src/store/modules/chat.js -> mutations
+
+  UPDATE_MESSAGE_CONTENT: (state, { sessionId, messageId, newData }) => {
+    if (!state.messages[sessionId]) return;
+
+    // 找到需要更新的那条消息的索引
+    const messageIndex = state.messages[sessionId].findIndex(m => m.id === messageId);
+
+    if (messageIndex > -1) {
+      // 找到原始消息对象
+      const originalMessage = state.messages[sessionId][messageIndex];
+
+      // [核心] 用新数据覆盖旧数据
+      const updatedMessage = { ...originalMessage, ...newData };
+
+      // 使用 Vue.set 来确保替换是响应式的
+      Vue.set(state.messages[sessionId], messageIndex, updatedMessage);
+    }
+  },
 }
 
 // 4. 定义异步操作或复杂的业务逻辑 (Actions - 操作手册)
@@ -151,7 +179,7 @@ const actions = {
   },
 
   // 发送消息 (假逻辑)
-  sendMessage({commit, state}, {userInput, files}) {
+  sendMessage({commit, state}, {userInput}) {
     const sessionId = state.activeSessionId
     if (!sessionId) return
 
