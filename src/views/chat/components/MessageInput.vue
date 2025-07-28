@@ -50,6 +50,7 @@
                        capture="microphone">
               <div class="option-item"><i class="el-icon-microphone"></i><span>录音</span></div>
             </el-upload>
+            <div class="option-item"><i class="el-icon-paperclip"></i><span>网址</span></div>
           </div>
 
           <!-- 触发 Popover 的按钮 -->

@@ -2,7 +2,7 @@
   <!-- 聊天记录区 -->
   <el-main class="chat-main-area">
     <el-scrollbar ref="scrollbar">
-      <div class="message-list">
+      <div class="message-list" ref="messageContainer">
         <!-- 加载更多 -->
         <div v-if="!noMore" class="load-more" @click="loadMoreMessages">
           {{ loading ? '加载中...' : '加载更多历史记录' }}
@@ -48,7 +48,7 @@
               @click="fetchVersion(msg, msg.activeVersion - 1)"
             ></el-button>
 
-            <span>{{ msg.activeVersion }} / {{ msg.totalVersions }}</span>
+            <span style="   color: var(--text-primary);">{{ msg.activeVersion }} / {{ msg.totalVersions }}</span>
 
             <el-button
               icon="el-icon-arrow-right"
@@ -224,8 +224,24 @@ export default {
   /* [关键] 需要让 el-scrollbar 知道该怎么撑开 */
   overflow: hidden;
   background-color: var(--bg-primary);
+  position: relative; /* 或者 display: flex; 也可以 */
 }
 
+/*
+  [核心修复 2] 让 el-scrollbar 充满它的父容器 el-main
+  我们可能需要用 ::v-deep 来确保能选中 el-scrollbar 的根元素
+*/
+::v-deep .el-scrollbar {
+  height: 100%;
+}
+/*
+  [核心修复 3] el-scrollbar 内部的 wrap 容器也需要设置高度。
+  Element UI 通常会自动处理，但如果不行，我们需要手动强制它。
+*/
+::v-deep .el-scrollbar__wrap {
+  overflow-x: hidden; /* 隐藏水平滚动条，防止意外出现 */
+  height: 100%; /* [重要] 确保滚动容器也有 100% 的高度 */
+}
 /* --- 5. 消息列表和气泡样式 --- */
 /* 这部分也保持不变 */
 
@@ -260,7 +276,7 @@ export default {
 .message-bubble {
   padding: 10px 15px;
   border-radius: 15px;
-  max-width: 70%;
+  max-width: 60%;
   word-wrap: break-word;
   line-height: 1.5;
 }

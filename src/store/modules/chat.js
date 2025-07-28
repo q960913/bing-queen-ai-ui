@@ -12,7 +12,14 @@ const state = {
     '0': [{
       id: 1,
       role: 'ai',
-      content: '"好的，这是一个关于不同 AI 模型对比的简单表格：\\n\\n| 模型名称 | 开发者 | 主要特点 |\\n| --- | --- | --- |\\n| **Gemini 1.5 Pro** | Google | *多模态能力强*，上下文窗口巨大 |\\n| **GPT-4o** | OpenAI | 速度快，成本低，支持实时语音 |\\n\\n希望这个对你有帮助！"',
+      content: '这是行内代码：`int a=1;`。这是代码块：\n' +
+        '\n' +
+        '```c++\n' +
+        'int main(int argc , char** argv){\n' +
+        '    std::cout << "Hello World!\\n";\n' +
+        '    return 0;\n' +
+        '}\n' +
+        '```',
       avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       turnId: 'turn-uuid-123', // [新增] 轮次ID
       activeVersion: 2,         // [新增] 当前版本号
@@ -20,7 +27,12 @@ const state = {
     }, {
       id: 2,
       role: 'user',
-      content: '"好的，这里是一段 JavaScript 示例代码，用于发起一个 `fetch` 请求：\\n\\n```javascript\\nasync function fetchData(url) {\\n  try {\\n    const response = await fetch(url);\\n    if (!response.ok) {\\n      throw new Error(`HTTP error! status: ${response.status}`);\\n    }\\n    const data = await response.json();\\n    return data;\\n  } catch (error) {\\n    console.error(\'Fetch error:\', error);\\n  }\\n}\\n\\nfetchData(\'https://api.example.com/data\');\\n```\\n\\n你可以用它来从 API 获取数据。"',
+      content: '这是**加粗**，*斜体*，~~删除线~~，[链接](https://blog.imalan.cn)。\n' +
+        '\n' +
+        '这是块引用与嵌套块引用：\n' +
+        '\n' +
+        '> 安得广厦千万间，大庇天下寒士俱欢颜！风雨不动安如山。\n' +
+        '> > 呜呼！何时眼前突兀见此屋，吾庐独破受冻死亦足！',
       avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       turnId: 'turn-uuid-123', // [新增] 轮次ID
       activeVersion: 2,         // [新增] 当前版本号
@@ -28,7 +40,33 @@ const state = {
     },], '1': [{
       id: 3,
       role: 'ai',
-      content: '"当然！若依项目的部署步骤通常如下：\\n\\n1.  **准备环境**\\n    *   Java JDK\\n    *   Maven\\n    *   MySQL\\n2.  **修改配置**\\n    *   修改 `application.yml` 中的数据库连接信息。\\n3.  **打包项目**\\n    *   运行 `mvn clean package`。\\n\\n> 请注意：部署前一定要仔细检查配置文件！"',
+      content:'这是有序列表：\n' +
+        '\n' +
+        '1. 打开冰箱\n' +
+        '    1. 右手放在冰箱门拉手上\n' +
+        '    2. 左手扶住冰箱主体\n' +
+        '    3. 右手向后用力\n' +
+        '2. 把大象放进冰箱\n' +
+        '3. 关上冰箱\n' +
+        '\n' +
+        '这是行内公式：$m\\times n$，这是块级公式：\n' +
+        '\n' +
+        '$C_{m\\times k}=A_{m\\times n}\\cdot B_{n\\times k}$\n' +
+        '\n' +
+        '这是一张图片：\n' +
+        '\n' +
+        '![1fa0f7b958d4234db58eac4f75318d7b.jpeg](https://cdn.imalan.cn/img/post/2934349b033b5bb5a19efc7233d3d539b700bcf5.jpg)\n' +
+        '\n' +
+        '这是表格：\n' +
+        '\n' +
+        '第一格表头 | 第二格表头\n' +
+        '--------- | -------------\n' +
+        '内容单元格 第一列第一格 | 内容单元格第二列第一格\n' +
+        '内容单元格 第一列第二格 多加文字 | 内容单元格第二列第二格\n' +
+        '\n' +
+        '水平分割线[^这是脚注]：\n' +
+        '\n' +
+        '------',
       avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       turnId: 'turn-uuid-123', // [新增] 轮次ID
       activeVersion: 2,         // [新增] 当前版本号
