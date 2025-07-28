@@ -29,8 +29,12 @@
           <el-avatar :src="msg.avatar" class="avatar"></el-avatar>
 
 
-          <!-- 消息气泡 -->
-          <div class="message-bubble">{{ msg.content }}</div>
+          <!-- ... 在 v-for 循环中 ... -->
+
+          <div class="message-bubble">
+            <!-- [核心修改] 使用 vue-markdown 组件 -->
+            <vue-markdown :source="msg.content" class="markdown-body"></vue-markdown>
+          </div>
           <!-- 在 v-for 循环中，AI 消息的部分 -->
           <div
             v-if="msg.totalVersions > 1"
@@ -91,9 +95,17 @@
 
 <script>
 import {mapGetters, mapState,mapMutations} from 'vuex'
+// [核心修改] 导入 vue-markdown 组件
+import VueMarkdown from 'vue-markdown';
+// [核心修改] 导入 highlight.js 的样式文件 (选择一个你喜欢的主题)
+import 'highlight.js/styles/github-dark.css'; // 比如 GitHub 的深色主题
 
 export default {
   name: 'MessageList',
+  // [核心修改] 注册新组件
+  components: {
+    VueMarkdown // 不再是 Vue2MarkdownIt
+  },
   data() {
     return {
       loading: false,
