@@ -54,7 +54,7 @@
             <el-option label="Gemini 1.5 Flash" value="gemini-1.5-flash"></el-option>
           </el-select>
           <label>温度</label>
-          <el-slider v-model="config.temperature" :min="0" :max="1" :step="0.1" show-input></el-slider>
+          <el-slider v-model="config.temperature" :min="0" :max="2" :step="0.1" show-input></el-slider>
           <label>系统提示词 (System Instruction)</label>
           <el-input type="textarea" :rows="4" v-model="config.systemInstruction"></el-input>
           <el-button type="primary" size="mini" @click.stop="saveConfig">保存设置</el-button>
