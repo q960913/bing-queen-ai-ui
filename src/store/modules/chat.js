@@ -12,7 +12,7 @@ const state = {
     '0': [{
       id: 1,
       role: 'ai',
-      content: '若依部署有什么问题吗？',
+      content: '"好的，这是一个关于不同 AI 模型对比的简单表格：\\n\\n| 模型名称 | 开发者 | 主要特点 |\\n| --- | --- | --- |\\n| **Gemini 1.5 Pro** | Google | *多模态能力强*，上下文窗口巨大 |\\n| **GPT-4o** | OpenAI | 速度快，成本低，支持实时语音 |\\n\\n希望这个对你有帮助！"',
       avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       turnId: 'turn-uuid-123', // [新增] 轮次ID
       activeVersion: 2,         // [新增] 当前版本号
@@ -20,7 +20,7 @@ const state = {
     }, {
       id: 2,
       role: 'user',
-      content: '我想`把`它部署`到` Vercel。',
+      content: '"好的，这里是一段 JavaScript 示例代码，用于发起一个 `fetch` 请求：\\n\\n```javascript\\nasync function fetchData(url) {\\n  try {\\n    const response = await fetch(url);\\n    if (!response.ok) {\\n      throw new Error(`HTTP error! status: ${response.status}`);\\n    }\\n    const data = await response.json();\\n    return data;\\n  } catch (error) {\\n    console.error(\'Fetch error:\', error);\\n  }\\n}\\n\\nfetchData(\'https://api.example.com/data\');\\n```\\n\\n你可以用它来从 API 获取数据。"',
       avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       turnId: 'turn-uuid-123', // [新增] 轮次ID
       activeVersion: 2,         // [新增] 当前版本号
@@ -28,7 +28,7 @@ const state = {
     },], '1': [{
       id: 3,
       role: 'ai',
-      content: '学习 Swift 最好的方法是用 Playgrounds！',
+      content: '"当然！若依项目的部署步骤通常如下：\\n\\n1.  **准备环境**\\n    *   Java JDK\\n    *   Maven\\n    *   MySQL\\n2.  **修改配置**\\n    *   修改 `application.yml` 中的数据库连接信息。\\n3.  **打包项目**\\n    *   运行 `mvn clean package`。\\n\\n> 请注意：部署前一定要仔细检查配置文件！"',
       avatar: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
       turnId: 'turn-uuid-123', // [新增] 轮次ID
       activeVersion: 2,         // [新增] 当前版本号
