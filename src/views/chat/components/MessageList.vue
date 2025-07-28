@@ -97,8 +97,6 @@
 import {mapGetters, mapState,mapMutations} from 'vuex'
 // [核心修改] 导入 vue-markdown 组件
 import VueMarkdown from 'vue-markdown';
-// [核心修改] 导入 highlight.js 的样式文件 (选择一个你喜欢的主题)
-import 'highlight.js/styles/github-dark.css'; // 比如 GitHub 的深色主题
 
 export default {
   name: 'MessageList',
