@@ -73,7 +73,7 @@
                 icon="el-icon-delete"
                 size="mini"
                 circle
-                @click="screenshotMessage(msg)"
+                @click="deleteMessage(msg)"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="重新生成" placement="top">
@@ -81,7 +81,7 @@
                 icon="el-icon-refresh"
                 size="mini"
                 circle
-                @click="exportMessage(msg)"
+                @click="refreshMessage(msg)"
               ></el-button>
             </el-tooltip>
           </div>
@@ -126,32 +126,13 @@ export default {
   mounted() {
   },
   methods: {
-    exportMessage(message) {
-      console.log('准备导出消息:', message);
-      alert('导出功能待实现。可以将内容保存为 TXT 或 Markdown 文件。');
-      // 伪代码:
-      // const content = message.content;
-      // const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-      // const link = document.createElement('a');
-      // link.href = URL.createObjectURL(blob);
-      // link.download = `chat-message-${message.id}.txt`;
-      // link.click();
-      // URL.revokeObjectURL(link.href);
+    refreshMessage(message) {
+      console.log('准备重新生成消息:', message);
+      alert('重新生成功能待实现');
     },
-    screenshotMessage(message) {
-      // 这个功能需要用到第三方库，比如 html2canvas
-      // npm install html2canvas
-      console.log('准备截图消息:', message);
-      alert('截图功能待实现。需要使用 html2canvas 库。');
-      // 伪代码:
-      // import html2canvas from 'html2canvas';
-      // const bubbleElement = document.querySelector(`[data-message-id="${message.id}"] .message-bubble`);
-      // html2canvas(bubbleElement).then(canvas => {
-      //   const link = document.createElement('a');
-      //   link.download = `chat-message-${message.id}.png`;
-      //   link.href = canvas.toDataURL();
-      //   link.click();
-      // });
+    deleteMessage(message) {
+      console.log('准备删除消息:', message);
+      alert('删除功能待实现');
     },
     editMessage(message) {
       // 实际应用中，通常只允许修改用户自己发的消息
