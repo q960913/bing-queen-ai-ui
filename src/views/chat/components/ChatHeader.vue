@@ -28,6 +28,13 @@
       ref="topicInput"
     ></el-input>
     <div class="header-group right">
+      <el-tooltip :content="isFocusMode ? '退出专注模式' : '进入专注模式'" placement="bottom">
+        <el-button
+          :icon="isFocusMode ? 'el-icon-copy-document' : 'el-icon-full-screen'"
+          circle
+          @click="toggleFocusMode"
+        ></el-button>
+      </el-tooltip>
     <!-- [核心] 搜索功能下拉菜单 -->
     <el-dropdown trigger="click" @command="handleSearchCommand">
       <el-button icon="el-icon-search" circle></el-button>
@@ -94,10 +101,10 @@ export default {
     ...mapState('chat', {
       isCollapsed: state => state.isSessionPanelCollapsed
     },),
-    ...mapState('chat', ['sessions', 'selectedMessages', 'isSelectionMode'])
+    ...mapState('chat', ['sessions', 'selectedMessages', 'isSelectionMode','isFocusMode'])
   },
   methods: {
-    ...mapActions('chat', ['toggleSelectionMode', 'toggleSessionPanel', 'updateTopic']),
+    ...mapActions('chat', ['toggleSelectionMode', 'toggleSessionPanel', 'updateTopic','toggleFocusMode']),
     // 开始编辑标题
     startEditTopic() {
       this.currentTopicInput = this.activeSession.topic;

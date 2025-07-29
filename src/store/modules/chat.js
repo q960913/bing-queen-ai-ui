@@ -2,6 +2,7 @@
 
 // 1. 定义需要全局共享的状态 (State - 公告牌)
 const state = {
+  isFocusMode: false, // [新增] 全局的专注模式状态
   isSessionPanelCollapsed: false, // [新增]
   isSelectionMode: false,
   selectedMessages: [],
@@ -154,6 +155,10 @@ const mutations = {
       sessionToUpdate.topic = newTopic;
     }
   },
+  // ...
+  TOGGLE_FOCUS_MODE: (state) => { // [新增]
+    state.isFocusMode = !state.isFocusMode;
+  },
   // src/store/modules/chat.js -> mutations
 
   UPDATE_MESSAGE_CONTENT: (state, { sessionId, messageId, newData }) => {
@@ -243,6 +248,10 @@ const actions = {
 
     // 提交 mutation 来更新前端的状态
     commit('UPDATE_TOPIC', { sessionId, newTopic });
+  },
+  // ...
+  toggleFocusMode({ commit }) { // [新增]
+    commit('TOGGLE_FOCUS_MODE');
   }
 
   // ... 未来对接后端的 Action ...

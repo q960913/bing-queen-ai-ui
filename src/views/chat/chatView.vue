@@ -1,7 +1,10 @@
 <template>
-  <div class="app-container chat-page-container" :class="theme">
-    <SessionPanel />
-    <ChatWindow />
+  <!-- [核心] 在根容器上动态绑定 is-fullscreen 类 -->
+  <div class="app-container chat-page-container" :class="[{ 'is-fullscreen': isFocusMode }, theme]">
+
+    <!-- [核心] 把 isFocusMode 和 @toggle 事件传递给子组件 -->
+    <SessionPanel/>
+    <ChatWindow :is-focus-mode="isFocusMode" @toggle-focus="toggleFocusMode" />
   </div>
 </template>
 
@@ -14,7 +17,7 @@ export default {
   name: 'ChatView',
   components: { SessionPanel, ChatWindow },
   computed: {
-    ...mapState('chat', ['theme'])
+    ...mapState('chat', ['theme','isFocusMode'])
   },
   created() {
     // this.$store.dispatch('chat/fetchInitialData');
@@ -73,6 +76,27 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1; /* 占据主要空间 */
+}
+/* src/views/chat/index.vue -> <style scoped> */
+
+.chat-page-container.is-fullscreen {
+  position: fixed; /* [核心] 使用固定定位 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000; /* [核心] 确保层级足够高，能覆盖若依的 Header 和 Sidebar */
+
+  /* [重要] 覆盖掉若依 .app-container 自带的 padding */
+  padding: 0 !important;
+}
+
+/* 在全屏模式下，聊天区域需要重新计算高度 */
+.is-fullscreen .chat-area {
+  height: 100vh;
+}
+.is-fullscreen .chat-container-relative {
+  height: 100vh;
 }
 
 
