@@ -303,6 +303,24 @@ export default {
   justify-content: flex-start;
   flex-direction: row-reverse; /* [修改] 翻转顺序，变为 操作栏, 气泡, 头像 */
 }
+/* --- 尺寸响应式样式 --- */
+
+/* 默认 (medium) 尺寸下的字体大小 */
+.message-bubble {
+  font-size: 14px;
+}
+
+
+/* 当父容器有 .small class 时 */
+.small .message-bubble {
+  font-size: 13px;
+}
+
+
+/* 当父容器有 .mini class 时 */
+.mini .message-bubble {
+  font-size: 12px;
+}
 
 /* 包含 .chat-main-area, .message-list, .message-bubble 等所有消息相关样式 */
 </style>

@@ -185,5 +185,17 @@ export default {
   align-items: center;
   gap: 15px; /* 组内元素之间的间距 */
 }
+/* --- 尺寸响应式样式 --- */
+
+.chat-header {
+  font-size: 16px;
+}
+
+.small .chat-header {
+  font-size: 15px;
+}
+.mini .chat-header  {
+  font-size: 14px;
+}
 /* 只包含 .chat-header 内部的样式 */
 </style>

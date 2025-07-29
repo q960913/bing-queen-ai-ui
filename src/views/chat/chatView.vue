@@ -1,6 +1,6 @@
 <template>
   <!-- [核心] 在根容器上动态绑定 is-fullscreen 类 -->
-  <div class="app-container chat-page-container" :class="[{ 'is-fullscreen': isFocusMode }, theme]">
+  <div class="app-container chat-page-container" :class="[{ 'is-fullscreen': isFocusMode }, theme, size]">
 
     <!-- [核心] 把 isFocusMode 和 @toggle 事件传递给子组件 -->
     <SessionPanel/>
@@ -17,6 +17,10 @@ export default {
   name: 'ChatView',
   components: { SessionPanel, ChatWindow },
   computed: {
+    // [核心] 从 app 模块中，订阅 size 状态
+    ...mapState({
+      size: state => state.app.size
+    }),
     ...mapState('chat', ['theme','isFocusMode'])
   },
   created() {

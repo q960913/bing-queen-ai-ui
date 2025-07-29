@@ -16,9 +16,6 @@
         <el-tooltip content="文档地址" effect="dark" placement="bottom">
           <bing-queen-ai-doc id="bing-queen-ai-doc" class="right-menu-item hover-effect" />
         </el-tooltip>
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>

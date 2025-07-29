@@ -305,7 +305,4 @@ export default {
   background-color: var(--brand-color);
   color: var(--brand-text-color);
 }
-
-
-
 </style>

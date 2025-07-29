@@ -160,4 +160,25 @@ export default {
 .session-panel.collapsed {
   flex-basis: 0; /* 或者一个很小的值，比如 64px */
 }
+/* --- 尺寸响应式样式 --- */
+
+/* 默认 (medium) 尺寸下的字体大小 */
+.session-topic {
+  font-size: 14px;
+}
+.session-header h3 {
+  font-size: 16px;
+}
+
+/* 当父容器有 .small class 时 */
+.small .session-topic,
+.small .session-header h3 {
+  font-size: 15px;
+}
+
+/* 当父容器有 .mini class 时 */
+.mini .session-topic,
+.mini .session-header h3 {
+  font-size: 14px;
+}
 </style>
