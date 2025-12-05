@@ -9,7 +9,7 @@ const CompressionPlugin = require('compression-webpack-plugin')
 
 const name = process.env.VUE_APP_TITLE || '冰冰AI聊天系统' // 网页标题
 
-const baseUrl = 'https://api.bingbingqueen.top' // 后端接口
+const baseUrl = 'http://127.0.0.1:8080' // 后端接口
 
 const port = process.env.port || process.env.npm_config_port || 80 // 端口
 

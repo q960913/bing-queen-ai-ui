@@ -11,7 +11,7 @@
 <script>
 import SessionPanel from './components/SessionPanel.vue'
 import ChatWindow from './components/ChatWindow.vue'
-import { mapState } from 'vuex'
+import { mapState,mapActions } from 'vuex'
 
 export default {
   name: 'ChatView',
@@ -25,8 +25,13 @@ export default {
   },
   created() {
     // this.$store.dispatch('chat/fetchInitialData');
-  }
-}
+  },
+  methods: {
+    // [核心] 从 Vuex 映射 actions
+    ...mapActions('chat', [
+      'toggleFocusMode'
+    ])
+  },}
 </script>
 
 <style lang="scss" scoped>
